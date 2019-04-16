@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSDN迁移,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="回顾CPU加电的第一条指令  在0xfffffff0处是存放着一条长跳转指令，直接跳到bios可执行代码区，而这些代码都是固化在主板上的rom区里的。0xF0000~0xFFFFF被映射到Bios ROM。   BIOS 初始化过程 BIOS首先会进行POST(power on self test) 上电自检, 检查硬件的好坏 内存地址为0fff:0000  查找并检查显卡等接口卡的BIOS">
+<meta name="keywords" content="CSDN迁移">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BIOS启动并加载OS">
+<meta property="og:url" content="http://yoursite.com/2019/04/11/BIOS启动并加载OS/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="回顾CPU加电的第一条指令  在0xfffffff0处是存放着一条长跳转指令，直接跳到bios可执行代码区，而这些代码都是固化在主板上的rom区里的。0xF0000~0xFFFFF被映射到Bios ROM。   BIOS 初始化过程 BIOS首先会进行POST(power on self test) 上电自检, 检查硬件的好坏 内存地址为0fff:0000  查找并检查显卡等接口卡的BIOS">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190411114002358.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190411114436569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-04-16T15:57:51.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BIOS启动并加载OS">
+<meta name="twitter:description" content="回顾CPU加电的第一条指令  在0xfffffff0处是存放着一条长跳转指令，直接跳到bios可执行代码区，而这些代码都是固化在主板上的rom区里的。0xF0000~0xFFFFF被映射到Bios ROM。   BIOS 初始化过程 BIOS首先会进行POST(power on self test) 上电自检, 检查硬件的好坏 内存地址为0fff:0000  查找并检查显卡等接口卡的BIOS">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190411114002358.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/11/BIOS启动并加载OS/">
+
+
+
+
+
+  <title>BIOS启动并加载OS | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/11/BIOS启动并加载OS/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BIOS启动并加载OS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-11T18:28:50+08:00">
+                2019-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  <a href="https://blog.csdn.net/MIMOCH/article/details/89167971" target="_blank" rel="noopener"> 回顾CPU加电的第一条指令</a><a href=""></a></p>
+<blockquote>
+<p>在0xfffffff0处是存放着一条长跳转指令，直接跳到bios可执行代码区，而这些代码都是固化在主板上的rom区里的。0xF0000~0xFFFFF被映射到Bios ROM。</p>
+</blockquote>
+<hr>
+<h5 id="BIOS-初始化过程"><a href="#BIOS-初始化过程" class="headerlink" title="BIOS 初始化过程"></a><a href=""></a>BIOS 初始化过程</h5><ul>
+<li>BIOS首先会进行POST(power on self test) 上电自检, 检查硬件的好坏 内存地址为0fff:0000 </li>
+<li>查找并检查显卡等接口卡的BIOS,并进行设备的初始化 </li>
+<li>执行系统BIOS,进行系统检测,检测和配置系统即插即用设备 </li>
+<li>更新CMOS中的扩展系统配置数据(ESCD)Extended System Configuration Data,这里保存的是设备资源分配表,每次开机更新是为了应对硬件改动造成与原来的资源分配表冲突. </li>
+<li>然后按照启动顺序从软盘.硬盘.光驱启动  <h5 id="BIOS加载OS过程"><a href="#BIOS加载OS过程" class="headerlink" title="BIOS加载OS过程"></a><a href=""></a>BIOS加载OS过程</h5></li>
+</ul>
+<h3 id="1-MBR将自己复制到内存地址-0000-0600处-然后开始执行"><a href="#1-MBR将自己复制到内存地址-0000-0600处-然后开始执行" class="headerlink" title="1.MBR将自己复制到内存地址 0000:0600处,然后开始执行"></a><a href=""></a>1.MBR将自己复制到内存地址 0000:0600处,然后开始执行</h3><p> MBR(主引导扇区)位于硬盘的 0 磁道 0 柱面第1扇区,该磁道均为隐含扇区,普通的磁盘访问命令无法访问,改扇区一共512个字节<br> <img src="https://img-blog.csdnimg.cn/20190411114002358.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<hr>
+<h3 id="2-在主分区表中搜索标志为活动的分区-如果发现没有活动分区或有不止一个活动分区-则转停止"><a href="#2-在主分区表中搜索标志为活动的分区-如果发现没有活动分区或有不止一个活动分区-则转停止" class="headerlink" title="2.在主分区表中搜索标志为活动的分区. 如果发现没有活动分区或有不止一个活动分区, 则转停止."></a><a href=""></a>2.在主分区表中搜索标志为活动的分区. 如果发现没有活动分区或有不止一个活动分区, 则转停止.</h3><p> MBR 主引导记录:</p>
+<blockquote>
+<p>1.启动代码 :446字节<br> 检查分区表正确性<br> 加载并跳转到硬盘上的引导程序</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>2.硬盘分区表:64字节<br> 描述分区状态和位置<br> 每个描述信息占据16个字节</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>3.结束标志55AA[0x55 0xAA]双字节<br> 判断是否合法</p>
+</blockquote>
+<hr>
+<h3 id="3-将活动分区的第一个扇区读入内存地址-0000-7c00-处"><a href="#3-将活动分区的第一个扇区读入内存地址-0000-7c00-处" class="headerlink" title="3.将活动分区的第一个扇区读入内存地址 0000:7c00 处."></a><a href=""></a>3.将活动分区的第一个扇区读入内存地址 0000:7c00 处.</h3><p> 硬盘分区表</p>
+<blockquote>
+<p>BYTE State : 分区状态, 0 = 未激活, 0x80 = 激活 (注意此项)<br> BYTE StartHead : 分区起始磁头号<br> WORD StartSC : 分区起始扇区和柱面号, 底字节的低6位为扇区号,<br> 高2位为柱面号的第 9,10 位, 高字节为柱面号的低 8 位<br> BYTE Type : 分区类型, 如 0x0B = FAT32, 0x83 = Linux 等,<br> 00 表示此项未用<br> BYTE EndHead : 分区结束磁头号<br> WORD EndSC : 分区结束扇区和柱面号, 定义同前<br> DWORD Relative : 在线性寻址方式下的分区相对扇区地址<br> (对于基本分区即为绝对地址)<br> DWORD Sectors : 分区大小 (总扇区数)</p>
+</blockquote>
+<h3 id="4-检查-WORD-0000-7dfe-是否等于-0xaa55-若不等于则显示-“Missing-Operating-System”-然后停止-或尝试软盘启动"><a href="#4-检查-WORD-0000-7dfe-是否等于-0xaa55-若不等于则显示-“Missing-Operating-System”-然后停止-或尝试软盘启动" class="headerlink" title="4. 检查 (WORD) 0000:7dfe 是否等于 0xaa55,若不等于则显示 “Missing Operating System” 然后停止, 或尝试软盘启动."></a><a href=""></a>4. 检查 (WORD) 0000:7dfe 是否等于 0xaa55,若不等于则显示 “Missing Operating System” 然后停止, 或尝试软盘启动.</h3><p> 分区引导扇区格式<br> <img src="https://img-blog.csdnimg.cn/20190411114436569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> JMP:跳转指令<br> 文件卷头:文件系统描述信息<br> 启动代码:跳转到加载程序<br> 结束标志:55AA</p>
+<h3 id="5-跳转到-0000-7c00-处继续执行特定系统的启动程序"><a href="#5-跳转到-0000-7c00-处继续执行特定系统的启动程序" class="headerlink" title="5. 跳转到 0000:7c00 处继续执行特定系统的启动程序."></a><a href=""></a>5. 跳转到 0000:7c00 处继续执行特定系统的启动程序.</h3><h3 id="6-系统启动-gt-gt-gt"><a href="#6-系统启动-gt-gt-gt" class="headerlink" title="6. 系统启动&gt;&gt;&gt;"></a><a href=""></a>6. 系统启动&gt;&gt;&gt;</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSDN迁移/" rel="tag"># CSDN迁移</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/10/开机加电的内存分布/" rel="next" title="开机加电的内存分布">
+                <i class="fa fa-chevron-left"></i> 开机加电的内存分布
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/11/CPU硬件组成/" rel="prev" title="CPU硬件组成">
+                CPU硬件组成 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#BIOS-初始化过程"><span class="nav-number">1.</span> <span class="nav-text">BIOS 初始化过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BIOS加载OS过程"><span class="nav-number">2.</span> <span class="nav-text">BIOS加载OS过程</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MBR将自己复制到内存地址-0000-0600处-然后开始执行"><span class="nav-number"></span> <span class="nav-text">1.MBR将自己复制到内存地址 0000:0600处,然后开始执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在主分区表中搜索标志为活动的分区-如果发现没有活动分区或有不止一个活动分区-则转停止"><span class="nav-number"></span> <span class="nav-text">2.在主分区表中搜索标志为活动的分区. 如果发现没有活动分区或有不止一个活动分区, 则转停止.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-将活动分区的第一个扇区读入内存地址-0000-7c00-处"><span class="nav-number"></span> <span class="nav-text">3.将活动分区的第一个扇区读入内存地址 0000:7c00 处.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-检查-WORD-0000-7dfe-是否等于-0xaa55-若不等于则显示-“Missing-Operating-System”-然后停止-或尝试软盘启动"><span class="nav-number"></span> <span class="nav-text">4. 检查 (WORD) 0000:7dfe 是否等于 0xaa55,若不等于则显示 “Missing Operating System” 然后停止, 或尝试软盘启动.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-跳转到-0000-7c00-处继续执行特定系统的启动程序"><span class="nav-number"></span> <span class="nav-text">5. 跳转到 0000:7c00 处继续执行特定系统的启动程序.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-系统启动-gt-gt-gt"><span class="nav-number"></span> <span class="nav-text">6. 系统启动&gt;&gt;&gt;</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

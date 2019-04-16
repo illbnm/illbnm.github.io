@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="c++学习,">
+  <meta name="keywords" content="CSDN迁移,">
 
 
 
@@ -79,18 +79,27 @@
 
 
 
-<meta name="description" content="1.命名空间确定变量的不同范围12345namespace AAA&amp;#123;        int a ; &amp;#125;using namespace AAA; 2.c++三目运算符可以当左值,因为返回的是引用3.const不能被修改c++对const不能修改用指针修改的只是一个临时的temp123const int a;int *p = (int *)&amp;amp;a;*p = 20 ; ４．">
-<meta name="keywords" content="c++学习">
+<meta name="description" content="二维数组的拷贝 1.直接拷贝数组地址 123int [][]arr = &amp;#123;&amp;#123;1,2,3&amp;#125;,&amp;#123;4,5,6&amp;#125;&amp;#125;;      int [][]brr = new int [2][3];      brr = arr;    此时在内存中是 brr 将arr的地址拷贝了过来   2.for循环拷贝(深拷贝)  1234567for(int i =">
+<meta name="keywords" content="CSDN迁移">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++day_回顾">
-<meta property="og:url" content="http://yoursite.com/2018/12/29/c-day-回顾/index.html">
+<meta property="og:title" content="Java中二维数组的拷贝方式">
+<meta property="og:url" content="http://yoursite.com/2019/03/27/Java中二维数组的拷贝方式/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.命名空间确定变量的不同范围12345namespace AAA&amp;#123;        int a ; &amp;#125;using namespace AAA; 2.c++三目运算符可以当左值,因为返回的是引用3.const不能被修改c++对const不能修改用指针修改的只是一个临时的temp123const int a;int *p = (int *)&amp;amp;a;*p = 20 ; ４．">
+<meta property="og:description" content="二维数组的拷贝 1.直接拷贝数组地址 123int [][]arr = &amp;#123;&amp;#123;1,2,3&amp;#125;,&amp;#123;4,5,6&amp;#125;&amp;#125;;      int [][]brr = new int [2][3];      brr = arr;    此时在内存中是 brr 将arr的地址拷贝了过来   2.for循环拷贝(深拷贝)  1234567for(int i =">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-29T12:03:54.524Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190327204227365.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190327204610227.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190327205517686.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190327210749645.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190327211033715.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190327212951761.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019032721351075.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190327213525109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-04-16T15:57:55.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++day_回顾">
-<meta name="twitter:description" content="1.命名空间确定变量的不同范围12345namespace AAA&amp;#123;        int a ; &amp;#125;using namespace AAA; 2.c++三目运算符可以当左值,因为返回的是引用3.const不能被修改c++对const不能修改用指针修改的只是一个临时的temp123const int a;int *p = (int *)&amp;amp;a;*p = 20 ; ４．">
+<meta name="twitter:title" content="Java中二维数组的拷贝方式">
+<meta name="twitter:description" content="二维数组的拷贝 1.直接拷贝数组地址 123int [][]arr = &amp;#123;&amp;#123;1,2,3&amp;#125;,&amp;#123;4,5,6&amp;#125;&amp;#125;;      int [][]brr = new int [2][3];      brr = arr;    此时在内存中是 brr 将arr的地址拷贝了过来   2.for循环拷贝(深拷贝)  1234567for(int i =">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190327204227365.png">
 
 
 
@@ -120,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/29/c-day-回顾/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/27/Java中二维数组的拷贝方式/">
 
 
 
 
 
-  <title>c++day_回顾 | Hexo</title>
+  <title>Java中二维数组的拷贝方式 | Hexo</title>
   
 
 
@@ -233,7 +242,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/c-day-回顾/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/27/Java中二维数组的拷贝方式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -250,7 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">c++day_回顾</h1>
+          <h1 class="post-title" itemprop="name headline">Java中二维数组的拷贝方式</h1>
         
 
         <div class="post-meta">
@@ -262,8 +271,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-29T20:02:19+08:00">
-                2018-12-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-27T21:35:52+08:00">
+                2019-03-27
               </time>
             
 
@@ -300,12 +309,36 @@
       
 
       
-        <html><br><br><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1324562341&auto=1&height=66"><br></iframe><br></html>
+        <h4 id="二维数组的拷贝"><a href="#二维数组的拷贝" class="headerlink" title="二维数组的拷贝"></a><a href=""></a>二维数组的拷贝</h4><p> <strong>1.直接拷贝数组地址</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int [][]arr = &#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;;</span><br><span class="line">      int [][]brr = new int [2][3];</span><br><span class="line">      brr = arr;</span><br></pre></td></tr></table></figure>
+<p> <img src="https://img-blog.csdnimg.cn/20190327204227365.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>此时在内存中是 brr 将arr的地址拷贝了过来<br> <img src="https://img-blog.csdnimg.cn/20190327204610227.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p> <strong>2.for循环拷贝(深拷贝)</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for(int i = 0;i&lt;arr.length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            for(int j= 0 ;j&lt;arr[i].length;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                brr[i][j] = arr[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>for循环将arr每个数都赋值到brr中,是一种完全的深拷贝<br> <img src="https://img-blog.csdnimg.cn/20190327205517686.png" alt="在这里插入图片描述"></p>
+<p> <strong>3. .clone拷贝(浅拷贝)</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int [][]arr = &#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;;</span><br><span class="line">      int [][]brr = new int [2][3];</span><br><span class="line">      brr =arr.clone();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这种情况下,内存打印出来如下<br> <img src="https://img-blog.csdnimg.cn/20190327210749645.png" alt="在这里插入图片描述"><br> <strong>不能简单地根据内存的hashcode不相等判断进行了深拷贝</strong><br> 其在内存中的分布如下<br> <img src="https://img-blog.csdnimg.cn/20190327211033715.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> .clone方法只是简单地将二维数组的行地址进行了深拷贝,而各个元素的地址还是行地址对它们的引用,因此对brr元素的操作也一定会对arr中的元素有影响,归根到底操作的就是同一个元素的内存</p>
+<p> <strong>4.Arrays.copyOf(); (浅拷贝)</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int [][]arr =new int [][] &#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;;</span><br><span class="line">      int [][]brr =new int [2][3] ;        </span><br><span class="line">      brr =Arrays.copyOf(arr,arr.length);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>和.clone一样,不能达到深拷贝,仅仅拷贝了行地址,完全没有改变数组元素的地址<br> <img src="https://img-blog.csdnimg.cn/20190327212951761.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p> 5.System.ArrayCopy();(浅拷贝)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int [][]arr = &#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;;</span><br><span class="line">int [][]brr =new int [2][3];</span><br><span class="line"> System.arraycopy(arr,0,brr,0,arr.length);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>原理同上</p>
+</blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/2019032721351075.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> <img src="https://img-blog.csdnimg.cn/20190327213525109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
 
-<h3 id="1-命名空间"><a href="#1-命名空间" class="headerlink" title="1.命名空间"></a>1.命名空间</h3><h6 id="确定变量的不同范围"><a href="#确定变量的不同范围" class="headerlink" title="确定变量的不同范围"></a>确定变量的不同范围</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namespace AAA&#123;</span><br><span class="line">    </span><br><span class="line">    int a ; </span><br><span class="line">&#125;</span><br><span class="line">using namespace AAA;</span><br></pre></td></tr></table></figure>
-<h3 id="2-c-三目运算符"><a href="#2-c-三目运算符" class="headerlink" title="2.c++三目运算符"></a>2.c++三目运算符</h3><h6 id="可以当左值-因为返回的是引用"><a href="#可以当左值-因为返回的是引用" class="headerlink" title="可以当左值,因为返回的是引用"></a>可以当左值,因为返回的是引用</h6><h3 id="3-const不能被修改"><a href="#3-const不能被修改" class="headerlink" title="3.const不能被修改"></a>3.const不能被修改</h3><h6 id="c-对const不能修改用指针修改的只是一个临时的temp"><a href="#c-对const不能修改用指针修改的只是一个临时的temp" class="headerlink" title="c++对const不能修改用指针修改的只是一个临时的temp"></a>c++对const不能修改用指针修改的只是一个临时的temp</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const int a;</span><br><span class="line">int *p = (int *)&amp;a;</span><br><span class="line">*p = 20 ;</span><br></pre></td></tr></table></figure>
-<h3 id="４．引用的特点"><a href="#４．引用的特点" class="headerlink" title="４．引用的特点"></a>４．引用的特点</h3><h6 id="int-amp-re-a-；（定义时出现-amp-为引用-，re-为a的别名，并且不分配内存-）"><a href="#int-amp-re-a-；（定义时出现-amp-为引用-，re-为a的别名，并且不分配内存-）" class="headerlink" title="int &amp;re = a ；（定义时出现&amp;为引用 ，re 为a的别名，并且不分配内存 ）"></a>int &amp;re = a ；（定义时出现&amp;为引用 ，re 为a的别名，并且不分配内存 ）</h6><h6 id="re-b-已经声明，不可改变"><a href="#re-b-已经声明，不可改变" class="headerlink" title="re = b  ;(已经声明，不可改变)"></a>re = b  ;(已经声明，不可改变)</h6><h6 id="int-amp-re-；error-（定义引用必须初始化）"><a href="#int-amp-re-；error-（定义引用必须初始化）" class="headerlink" title="int &amp;re ；error （定义引用必须初始化）"></a>int &amp;re ；error （定义引用必须初始化）</h6><h6 id="int-amp-re3-re；-（可对引用再次引用"><a href="#int-amp-re3-re；-（可对引用再次引用" class="headerlink" title="int &amp;re3 = re； （可对引用再次引用)"></a>int &amp;re3 = re； （可对引用再次引用)</h6><h3 id="5-对常量的引用"><a href="#5-对常量的引用" class="headerlink" title="5.对常量的引用"></a>5.对常量的引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int &amp;a = 40</span><br></pre></td></tr></table></figure>
-<h6 id="引用的是常量的临时空间变量的别名"><a href="#引用的是常量的临时空间变量的别名" class="headerlink" title="引用的是常量的临时空间变量的别名"></a>引用的是常量的临时空间变量的别名</h6>
       
     </div>
     
@@ -322,7 +355,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/c-学习/" rel="tag"># c++学习</a>
+            <a href="/tags/CSDN迁移/" rel="tag"># CSDN迁移</a>
           
         </div>
       
@@ -335,14 +368,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/03/27/Java基础之二维数组定义与拷贝/" rel="next" title="Java基础之二维数组定义与拷贝">
+                <i class="fa fa-chevron-left"></i> Java基础之二维数组定义与拷贝
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/18/Java基础之基本的编译和数据类型(一)/" rel="prev" title="Java基础之基本的编译和数据类型(一)">
-                Java基础之基本的编译和数据类型(一) <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/31/Java小练习-替换空格/" rel="prev" title="Java小练习-替换空格">
+                Java小练习-替换空格 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -466,7 +503,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-命名空间"><span class="nav-number">1.</span> <span class="nav-text">1.命名空间</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#确定变量的不同范围"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">确定变量的不同范围</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#2-c-三目运算符"><span class="nav-number">2.</span> <span class="nav-text">2.c++三目运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#可以当左值-因为返回的是引用"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">可以当左值,因为返回的是引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-const不能被修改"><span class="nav-number">3.</span> <span class="nav-text">3.const不能被修改</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#c-对const不能修改用指针修改的只是一个临时的temp"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">c++对const不能修改用指针修改的只是一个临时的temp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#４．引用的特点"><span class="nav-number">4.</span> <span class="nav-text">４．引用的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#int-amp-re-a-；（定义时出现-amp-为引用-，re-为a的别名，并且不分配内存-）"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">int &amp;re = a ；（定义时出现&amp;为引用 ，re 为a的别名，并且不分配内存 ）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#re-b-已经声明，不可改变"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">re = b  ;(已经声明，不可改变)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#int-amp-re-；error-（定义引用必须初始化）"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">int &amp;re ；error （定义引用必须初始化）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#int-amp-re3-re；-（可对引用再次引用"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">int &amp;re3 = re； （可对引用再次引用)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-对常量的引用"><span class="nav-number">5.</span> <span class="nav-text">5.对常量的引用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#引用的是常量的临时空间变量的别名"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">引用的是常量的临时空间变量的别名</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#二维数组的拷贝"><span class="nav-number">1.</span> <span class="nav-text">二维数组的拷贝</span></a></li></ol></div>
             
 
           </div>

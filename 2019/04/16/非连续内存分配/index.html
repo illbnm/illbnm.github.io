@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSDN迁移,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="非连续分配: 允许程序使用非连续的的地址空间  允许共享代码和数据  支持动态加载和动态链接  实现物理地址和虚拟地址的转换  段式存储管理 目的:更精细的粒度和灵活的分离与共享  程序: 堆  堆栈  数据段  代码段  段 : -  表示访问方式和存储数据属性相同的一段地址空间  每个段对应一个连续的内存”块”  进程的地址空间由若干个段组成  段地址空间 :段地址+段地址偏移 访问    先">
+<meta name="keywords" content="CSDN迁移">
+<meta property="og:type" content="article">
+<meta property="og:title" content="非连续内存分配">
+<meta property="og:url" content="http://yoursite.com/2019/04/16/非连续内存分配/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="非连续分配: 允许程序使用非连续的的地址空间  允许共享代码和数据  支持动态加载和动态链接  实现物理地址和虚拟地址的转换  段式存储管理 目的:更精细的粒度和灵活的分离与共享  程序: 堆  堆栈  数据段  代码段  段 : -  表示访问方式和存储数据属性相同的一段地址空间  每个段对应一个连续的内存”块”  进程的地址空间由若干个段组成  段地址空间 :段地址+段地址偏移 访问    先">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190416104642141.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190416111347627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019041611272566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190416113620678.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190416154232130.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019041616245455.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190416163921736.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-04-16T15:57:45.881Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="非连续内存分配">
+<meta name="twitter:description" content="非连续分配: 允许程序使用非连续的的地址空间  允许共享代码和数据  支持动态加载和动态链接  实现物理地址和虚拟地址的转换  段式存储管理 目的:更精细的粒度和灵活的分离与共享  程序: 堆  堆栈  数据段  代码段  段 : -  表示访问方式和存储数据属性相同的一段地址空间  每个段对应一个连续的内存”块”  进程的地址空间由若干个段组成  段地址空间 :段地址+段地址偏移 访问    先">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190416104642141.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/16/非连续内存分配/">
+
+
+
+
+
+  <title>非连续内存分配 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/16/非连续内存分配/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">非连续内存分配</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-16T16:42:15+08:00">
+                2019-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="非连续分配"><a href="#非连续分配" class="headerlink" title="非连续分配:"></a><a href=""></a>非连续分配:</h1><ul>
+<li>允许程序使用非连续的的地址空间 </li>
+<li>允许共享代码和数据 </li>
+<li>支持动态加载和动态链接  实现物理地址和虚拟地址的转换</li>
+</ul>
+<h3 id="段式存储管理"><a href="#段式存储管理" class="headerlink" title="段式存储管理"></a><a href=""></a><strong>段式存储管理</strong></h3><p> 目的:更精细的粒度和灵活的分离与共享</p>
+<p> 程序:<br> 堆</p>
+<p> 堆栈</p>
+<p> 数据段</p>
+<p> 代码段</p>
+<p> <strong>段</strong> : -</p>
+<ul>
+<li>表示访问方式和存储数据属性相同的一段地址空间 </li>
+<li>每个段对应一个连续的内存”块” </li>
+<li><p>进程的地址空间由若干个段组成  段地址空间 :段地址+段地址偏移</p>
+<p><img src="https://img-blog.csdnimg.cn/20190416104642141.png" alt="image"><br>访问</p>
+</li>
+</ul>
+<ul>
+<li>先查询段表 存储了基址和长度 </li>
+<li><p>MMU 会根据页表查询是否越界  </p>
+<h3 id="页式存储管理"><a href="#页式存储管理" class="headerlink" title="页式存储管理"></a><a href=""></a>页式存储管理</h3><p><a href=""></a>页帧 (将物理页面 基本单位) 大小为2的n次方 <a href=""></a>页面(将逻辑地址划分为逻辑页面 )帧与页大小相同 </p>
+<h5 id="页面到页帧的转换"><a href="#页面到页帧的转换" class="headerlink" title="页面到页帧的转换"></a><a href=""></a>页面到页帧的转换</h5><p>假定<br>16位地址空间 9bit(512b)大小的帧</p>
+<p>页帧 &gt; 帧号 + 帧内偏移</p>
+<p>页 &gt;页号 +页内偏移</p>
+<p>页内偏移 = 页帧偏移</p>
+<p>页号与帧号一般不相同<br><img src="https://img-blog.csdnimg.cn/20190416111347627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="image"></p>
+</li>
+</ul>
+<h3 id="页表的转换-每一个进程有一个页表"><a href="#页表的转换-每一个进程有一个页表" class="headerlink" title="页表的转换(每一个进程有一个页表)"></a><a href=""></a>页表的转换(每一个进程有一个页表)</h3><ul>
+<li>每个页面对应一个页表项 </li>
+<li>随程序运行动态变化 </li>
+<li>存在页表基址寄存器中  页表项组成<br><img src="https://img-blog.csdnimg.cn/2019041611272566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="image"></li>
+</ul>
+<ol start="2">
+<li>帧号:f </li>
+<li>页表项标志  <blockquote>
+<blockquote>
+<ul>
+<li>存在位:逻辑页号是否有物理帧对应 </li>
+<li>修改位:页面是否被修改 </li>
+<li>引用位:是否访问过页面的存储单元<br>存在问题</li>
+</ul>
+</blockquote>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><p>内存访问性能问题:访问一次内存单元需要两次内存访问  <strong>解决方法:使用快表,在CPU中的cache中存储页表,命中直接访问内存</strong></p>
+<p>第一次访问页表项 第二次访问数据</p>
+</li>
+</ul>
+<ul>
+<li><p>页表大小问题:页表可能很大  解决方法:</p>
+<p>建立多级页表,减少每级页表的长,但是又增加了访存次数<br><img src="https://img-blog.csdnimg.cn/20190416113620678.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="image"></p>
+<p>页寄存器与反置页表:</p>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<ul>
+<li>不让页表与逻辑地址空间相对应 </li>
+<li>让页表与物理地址空间的大小相对应<br><strong>页寄存器</strong></li>
+</ul>
+</blockquote>
+</blockquote>
+<ul>
+<li>每个帧与一个页寄存器关联  寄存器内容:</li>
+</ul>
+<blockquote>
+<p>使用位:此帧是否被进程占用</p>
+<p> 占用页号:对应的儿页号p</p>
+<p> 保护位:读写控制</p>
+<p> 页寄存器中的地址转换</p>
+</blockquote>
+<ul>
+<li>对逻辑地址进行Hash映射,以减少搜索范围 </li>
+<li>需要解决可能的冲突  用快表缓存页表项的页寄存器搜索步骤</li>
+</ul>
+<ol start="2">
+<li>对逻辑地址进行Hash变换 </li>
+<li>在快表中查找对应页表项 </li>
+<li>有冲突是遍历冲突项列表 </li>
+<li><p>查找失败,产生异常  </p>
+<h5 id="反置页表"><a href="#反置页表" class="headerlink" title="反置页表"></a><a href=""></a>反置页表</h5><p>在进行Hash时,将进程标识和页号一同进行Hash<br><img src="https://img-blog.csdnimg.cn/20190416154232130.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="image"></p>
+<p>页表项包括:</p>
+</li>
+</ol>
+<ul>
+<li>页号：虚拟地址页号 </li>
+<li>进程标志符：使用该页的进程号（页号和进程标志符结合起来标志一个特定进程的虚拟地址空间的一页 </li>
+<li>标志位：有效、引用、修改、保护和锁定等标志信息 </li>
+<li>哈希链指针  详解一次冲突</li>
+</ul>
+<blockquote>
+<p>首先将pid和页号进行Hash,得到一个索引值,</p>
+<p> 然后在反置页表中查找索引值那一行,看pid和页号是否和Hash之前一样</p>
+<p> 如果不一样,说明发生了冲突,然后访问这一项的哈希链指针指向的下一项</p>
+<p> 然后再进行判断pid和页号</p>
+</blockquote>
+<h5 id="段页式存储管理"><a href="#段页式存储管理" class="headerlink" title="段页式存储管理"></a><a href=""></a>段页式存储管理</h5><p> <em>段式存储在内存保护方面有优势,也是存储在内存利用和优化到后背存储方面有优势</em><br> <img src="https://img-blog.csdnimg.cn/2019041616245455.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="image"></p>
+<blockquote>
+<p>段页式存储,是在每一个段上加一级页表</p>
+<p> 在段页式存储管理中的内存共享</p>
+</blockquote>
+<ul>
+<li>通过指向相同的页表基址,实现进程间的段共享 </li>
+<li><img src="https://img-blog.csdnimg.cn/20190416163921736.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="image">    </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSDN迁移/" rel="tag"># CSDN迁移</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/16/处理器结构与功能/" rel="next" title="处理器结构与功能">
+                <i class="fa fa-chevron-left"></i> 处理器结构与功能
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/16/合并两个有序数组/" rel="prev" title="合并两个有序数组">
+                合并两个有序数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#非连续分配"><span class="nav-number">1.</span> <span class="nav-text">非连续分配:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#段式存储管理"><span class="nav-number">1.0.1.</span> <span class="nav-text">段式存储管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页式存储管理"><span class="nav-number">1.0.2.</span> <span class="nav-text">页式存储管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#页面到页帧的转换"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">页面到页帧的转换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页表的转换-每一个进程有一个页表"><span class="nav-number">1.0.3.</span> <span class="nav-text">页表的转换(每一个进程有一个页表)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#反置页表"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text">反置页表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#段页式存储管理"><span class="nav-number">1.0.3.0.2.</span> <span class="nav-text">段页式存储管理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

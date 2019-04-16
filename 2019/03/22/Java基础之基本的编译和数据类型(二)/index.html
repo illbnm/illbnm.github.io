@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="c++学习,">
+  <meta name="keywords" content="CSDN迁移,">
 
 
 
@@ -79,18 +79,23 @@
 
 
 
-<meta name="description" content="1.命名空间确定变量的不同范围12345namespace AAA&amp;#123;        int a ; &amp;#125;using namespace AAA; 2.c++三目运算符可以当左值,因为返回的是引用3.const不能被修改c++对const不能修改用指针修改的只是一个临时的temp123const int a;int *p = (int *)&amp;amp;a;*p = 20 ; ４．">
-<meta name="keywords" content="c++学习">
+<meta name="description" content="1.char 类型   用来表示单个字符,Java中为双字节表示 范围 : \u0000 ~ \uffff  特殊的转义字符  转义序列 | 名称 ---- | --  \\b  | 退格 \\t  | 制表 \\n  | 换行 \\r  | 回车 2.boolean类型   布尔类型有两个值 true 和 false ,整型值和布尔值之间不能相互转换  1boolean Bool = 0 ;">
+<meta name="keywords" content="CSDN迁移">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++day_回顾">
-<meta property="og:url" content="http://yoursite.com/2018/12/29/c-day-回顾/index.html">
+<meta property="og:title" content="Java基础之基本的编译和数据类型(二)">
+<meta property="og:url" content="http://yoursite.com/2019/03/22/Java基础之基本的编译和数据类型(二)/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.命名空间确定变量的不同范围12345namespace AAA&amp;#123;        int a ; &amp;#125;using namespace AAA; 2.c++三目运算符可以当左值,因为返回的是引用3.const不能被修改c++对const不能修改用指针修改的只是一个临时的temp123const int a;int *p = (int *)&amp;amp;a;*p = 20 ; ４．">
+<meta property="og:description" content="1.char 类型   用来表示单个字符,Java中为双字节表示 范围 : \u0000 ~ \uffff  特殊的转义字符  转义序列 | 名称 ---- | --  \\b  | 退格 \\t  | 制表 \\n  | 换行 \\r  | 回车 2.boolean类型   布尔类型有两个值 true 和 false ,整型值和布尔值之间不能相互转换  1boolean Bool = 0 ;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-29T12:03:54.524Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322221440964.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322223047568.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190323175957702.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019032520024259.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-04-16T15:57:59.318Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++day_回顾">
-<meta name="twitter:description" content="1.命名空间确定变量的不同范围12345namespace AAA&amp;#123;        int a ; &amp;#125;using namespace AAA; 2.c++三目运算符可以当左值,因为返回的是引用3.const不能被修改c++对const不能修改用指针修改的只是一个临时的temp123const int a;int *p = (int *)&amp;amp;a;*p = 20 ; ４．">
+<meta name="twitter:title" content="Java基础之基本的编译和数据类型(二)">
+<meta name="twitter:description" content="1.char 类型   用来表示单个字符,Java中为双字节表示 范围 : \u0000 ~ \uffff  特殊的转义字符  转义序列 | 名称 ---- | --  \\b  | 退格 \\t  | 制表 \\n  | 换行 \\r  | 回车 2.boolean类型   布尔类型有两个值 true 和 false ,整型值和布尔值之间不能相互转换  1boolean Bool = 0 ;">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190322221440964.png">
 
 
 
@@ -120,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/29/c-day-回顾/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/22/Java基础之基本的编译和数据类型(二)/">
 
 
 
 
 
-  <title>c++day_回顾 | Hexo</title>
+  <title>Java基础之基本的编译和数据类型(二) | Hexo</title>
   
 
 
@@ -233,7 +238,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/c-day-回顾/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/22/Java基础之基本的编译和数据类型(二)/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -250,7 +255,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">c++day_回顾</h1>
+          <h1 class="post-title" itemprop="name headline">Java基础之基本的编译和数据类型(二)</h1>
         
 
         <div class="post-meta">
@@ -262,8 +267,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-29T20:02:19+08:00">
-                2018-12-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-22T22:57:00+08:00">
+                2019-03-22
               </time>
             
 
@@ -300,12 +305,61 @@
       
 
       
-        <html><br><br><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1324562341&auto=1&height=66"><br></iframe><br></html>
+        <p>  <a href=""></a>1.char 类型 </p>
+<blockquote>
+<p>用来表示单个字符,Java中为双字节表示 范围 : <strong>\u0000 ~ \uffff</strong></p>
+<p> 特殊的转义字符</p>
+</blockquote>
+<pre><code>转义序列 | 名称
+---- | -- 
+\\b  | 退格
+\\t  | 制表
+\\n  | 换行
+\\r  | 回车
+</code></pre><p><a href=""></a>2.boolean类型 </p>
+<blockquote>
+<p>布尔类型有两个值 true 和 false ,整型值和布尔值之间不能相互转换</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boolean Bool = 0 ; (编译不通过)</span><br></pre></td></tr></table></figure>
+<p> <img src="https://img-blog.csdnimg.cn/20190322221440964.png" alt="在这里插入图片描述"></p>
+<p> <a href=""></a>3.常量 </p>
+<blockquote>
+<p>在Java中用关键字final来指示常量<br> final表示这个变量只能被赋值一次,一旦被赋值就不能被更改<br> 习惯上,常量名使用全大写</p>
+<p> <a href=""></a>4.数值类型的转换<br>下图中实心箭头表示无信息丢失的转换,虚线箭头表示可能有精度丢失的转换</p>
+<p> <img src="https://img-blog.csdnimg.cn/20190322223047568.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<p> <a href=""></a>(1)隐式类型转换 </p>
+<blockquote>
+<p>当大类型数据放入小类型数据中会发生隐式类型转换,或者说精度低的数据存放到精度高的数据变量中也会发生隐式类型转换</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">short a=10;</span><br><span class="line">int b = a;    	(会发生隐式类型转换)</span><br></pre></td></tr></table></figure>
+<h5 id="2-显式类型转换"><a href="#2-显式类型转换" class="headerlink" title="(2)显式类型转换"></a><a href=""></a>(2)显式类型转换</h5><blockquote>
+<p>把大类型数据放入小类型变量中势必会发生数据的截断,精度降低的现象<br> 一般使用强转操作符()进行使用</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">long a = 100l;</span><br><span class="line">int b = (int)a ; (强制类型转换)</span><br></pre></td></tr></table></figure>
+<p> <a href=""></a>3.逻辑运算符 </p>
+<blockquote>
+<p>&amp;&amp; (与)<br> a&amp;&amp;b 只有a,b均为true ,结果才为true ,否则为false<br> | (或)<br> a||b只有a,b均为false结果才为false,否则为true<br> !a 与a的值相反</p>
+<p> <a href=""></a>4.按位运算符<br>1.按位求反运算符~<br> 对操作数的二进制数据的每一个二进制位都取反<br> <img src="https://img-blog.csdnimg.cn/20190323175957702.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> 0000 0101<br> 1111 1010</p>
+</blockquote>
+<blockquote>
+<p>2.位与运算符&amp;<br> 对两个操作数,相应的二进制数位进行位与运算(有0为0)<br> 0101<br> 1101<br> 0001</p>
+</blockquote>
+<blockquote>
+<p>3.位或运算符 | 有1为1<br> 5 |11 &gt;15<br> 0101<br> 1011<br> 1111<br> 结果为15</p>
+</blockquote>
+<blockquote>
+<p>4.位异或运算符 ^ 两个位一样为0否则为1<br> 5^11<br> 0101<br> 1011<br> 1110<br> 其异或结果为14</p>
+</blockquote>
+<blockquote>
+<p>5.保留符号位的右移运算符&gt;&gt;<br> 将一个操作数的各个二进制位全部都向右若干位,这个数由右操作数决定,移到低位的将被舍弃.</p>
+<p> 6 不保留符号位的右移运算符&gt;&gt;&gt;<br> 与&gt;&gt;不同的是， &gt;&gt;&gt;右移后左边空出的位用 0 填充。 如 5&gt;&gt;&gt;1 结果为 2。 －9&gt;&gt;&gt;1， 结果为 2147483643。</p>
+</blockquote>
+<blockquote>
+<p>7 左移运算符&lt;&lt;<br> 将一个操作数的所有二进制位向左移若干位， 右边空出的位填 0。 若高位左移后溢出， 则舍弃溢出的数。<br> 如 5&lt;&lt;1 结果为 10</p>
+<p> <strong>运算符的优先级表</strong><br> <img src="https://img-blog.csdnimg.cn/2019032520024259.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01JTU9DSA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
 
-<h3 id="1-命名空间"><a href="#1-命名空间" class="headerlink" title="1.命名空间"></a>1.命名空间</h3><h6 id="确定变量的不同范围"><a href="#确定变量的不同范围" class="headerlink" title="确定变量的不同范围"></a>确定变量的不同范围</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namespace AAA&#123;</span><br><span class="line">    </span><br><span class="line">    int a ; </span><br><span class="line">&#125;</span><br><span class="line">using namespace AAA;</span><br></pre></td></tr></table></figure>
-<h3 id="2-c-三目运算符"><a href="#2-c-三目运算符" class="headerlink" title="2.c++三目运算符"></a>2.c++三目运算符</h3><h6 id="可以当左值-因为返回的是引用"><a href="#可以当左值-因为返回的是引用" class="headerlink" title="可以当左值,因为返回的是引用"></a>可以当左值,因为返回的是引用</h6><h3 id="3-const不能被修改"><a href="#3-const不能被修改" class="headerlink" title="3.const不能被修改"></a>3.const不能被修改</h3><h6 id="c-对const不能修改用指针修改的只是一个临时的temp"><a href="#c-对const不能修改用指针修改的只是一个临时的temp" class="headerlink" title="c++对const不能修改用指针修改的只是一个临时的temp"></a>c++对const不能修改用指针修改的只是一个临时的temp</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const int a;</span><br><span class="line">int *p = (int *)&amp;a;</span><br><span class="line">*p = 20 ;</span><br></pre></td></tr></table></figure>
-<h3 id="４．引用的特点"><a href="#４．引用的特点" class="headerlink" title="４．引用的特点"></a>４．引用的特点</h3><h6 id="int-amp-re-a-；（定义时出现-amp-为引用-，re-为a的别名，并且不分配内存-）"><a href="#int-amp-re-a-；（定义时出现-amp-为引用-，re-为a的别名，并且不分配内存-）" class="headerlink" title="int &amp;re = a ；（定义时出现&amp;为引用 ，re 为a的别名，并且不分配内存 ）"></a>int &amp;re = a ；（定义时出现&amp;为引用 ，re 为a的别名，并且不分配内存 ）</h6><h6 id="re-b-已经声明，不可改变"><a href="#re-b-已经声明，不可改变" class="headerlink" title="re = b  ;(已经声明，不可改变)"></a>re = b  ;(已经声明，不可改变)</h6><h6 id="int-amp-re-；error-（定义引用必须初始化）"><a href="#int-amp-re-；error-（定义引用必须初始化）" class="headerlink" title="int &amp;re ；error （定义引用必须初始化）"></a>int &amp;re ；error （定义引用必须初始化）</h6><h6 id="int-amp-re3-re；-（可对引用再次引用"><a href="#int-amp-re3-re；-（可对引用再次引用" class="headerlink" title="int &amp;re3 = re； （可对引用再次引用)"></a>int &amp;re3 = re； （可对引用再次引用)</h6><h3 id="5-对常量的引用"><a href="#5-对常量的引用" class="headerlink" title="5.对常量的引用"></a>5.对常量的引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int &amp;a = 40</span><br></pre></td></tr></table></figure>
-<h6 id="引用的是常量的临时空间变量的别名"><a href="#引用的是常量的临时空间变量的别名" class="headerlink" title="引用的是常量的临时空间变量的别名"></a>引用的是常量的临时空间变量的别名</h6>
       
     </div>
     
@@ -322,7 +376,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/c-学习/" rel="tag"># c++学习</a>
+            <a href="/tags/CSDN迁移/" rel="tag"># CSDN迁移</a>
           
         </div>
       
@@ -335,14 +389,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/03/20/在Java中 ==  与 equals 的区别/" rel="next" title="在Java中 ==  与 equals 的区别">
+                <i class="fa fa-chevron-left"></i> 在Java中 ==  与 equals 的区别
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/18/Java基础之基本的编译和数据类型(一)/" rel="prev" title="Java基础之基本的编译和数据类型(一)">
-                Java基础之基本的编译和数据类型(一) <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/25/Java基础之一维数组声明与底层的拷贝方法/" rel="prev" title="Java基础之一维数组声明与底层的拷贝方法">
+                Java基础之一维数组声明与底层的拷贝方法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -466,7 +524,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-命名空间"><span class="nav-number">1.</span> <span class="nav-text">1.命名空间</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#确定变量的不同范围"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">确定变量的不同范围</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#2-c-三目运算符"><span class="nav-number">2.</span> <span class="nav-text">2.c++三目运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#可以当左值-因为返回的是引用"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">可以当左值,因为返回的是引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-const不能被修改"><span class="nav-number">3.</span> <span class="nav-text">3.const不能被修改</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#c-对const不能修改用指针修改的只是一个临时的temp"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">c++对const不能修改用指针修改的只是一个临时的temp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#４．引用的特点"><span class="nav-number">4.</span> <span class="nav-text">４．引用的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#int-amp-re-a-；（定义时出现-amp-为引用-，re-为a的别名，并且不分配内存-）"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">int &amp;re = a ；（定义时出现&amp;为引用 ，re 为a的别名，并且不分配内存 ）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#re-b-已经声明，不可改变"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">re = b  ;(已经声明，不可改变)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#int-amp-re-；error-（定义引用必须初始化）"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">int &amp;re ；error （定义引用必须初始化）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#int-amp-re3-re；-（可对引用再次引用"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">int &amp;re3 = re； （可对引用再次引用)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-对常量的引用"><span class="nav-number">5.</span> <span class="nav-text">5.对常量的引用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#引用的是常量的临时空间变量的别名"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">引用的是常量的临时空间变量的别名</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-显式类型转换"><span class="nav-number">1.</span> <span class="nav-text">(2)显式类型转换</span></a></li></ol></div>
             
 
           </div>
